@@ -17,10 +17,10 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Ana Sayfa" component={HomeScreen} />
       <Tab.Screen name="Dersler & Notlar" component={GradesScreen} />
       <Tab.Screen name="Mesajlar" component={MessagesScreen} />
       <Tab.Screen name="Bildirimler" component={NotificationsScreen} />
+      <Tab.Screen name="Ana Sayfa" component={HomeScreen} />
     </Tab.Navigator>
   );
 }
