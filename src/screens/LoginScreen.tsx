@@ -3,37 +3,42 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/slices/authSlice';
+import { logError } from '../utils/errorLogger';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('veli@example.com');
   const [password, setPassword] = useState('123456');
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
-    // Örnek veri ile giriş
-    dispatch(login({
-      token: 'dummy-token',
-      parent: {
-        id: '1',
-        name: 'Ahmet Yılmaz',
-        email: email,
-        phone: '0555 555 5555',
-        students: [
-          {
-            id: '1',
-            name: 'Mehmet Yılmaz',
-            class: '8-A',
-            photo: 'https://example.com/student1.jpg'
-          },
-          {
-            id: '2',
-            name: 'Ayşe Yılmaz',
-            class: '5-B',
-            photo: 'https://example.com/student2.jpg'
-          }
-        ]
-      }
-    }));
+  const handleLogin = async () => {
+    try {
+      // Örnek veri ile giriş
+      dispatch(login({
+        token: 'dummy-token',
+        parent: {
+          id: '1',
+          name: 'Ahmet Yılmaz',
+          email: email,
+          phone: '0555 555 5555',
+          students: [
+            {
+              id: '1',
+              name: 'Mehmet Yılmaz',
+              class: '8-A',
+              photo: 'https://example.com/student1.jpg'
+            },
+            {
+              id: '2',
+              name: 'Ayşe Yılmaz',
+              class: '5-B',
+              photo: 'https://example.com/student2.jpg'
+            }
+          ]
+        }
+      }));
+    } catch (error) {
+      await logError(error);
+    }
   };
 
   return (

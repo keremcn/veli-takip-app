@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +13,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { logout } from './src/store/slices/authSlice';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import StudentListScreen from './src/screens/StudentListScreen';
-
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import GradesScreen from './src/screens/GradesScreen';
@@ -22,6 +22,8 @@ import ScheduleScreen from './src/screens/ScheduleScreen';
 import LocationScreen from './src/screens/LocationScreen';
 import NotificationSettingsScreen from './src/screens/NotificationSettingsScreen';
 import NewsDetailScreen from './src/screens/NewsDetailScreen';
+import ErrorListScreen from './src/screens/ErrorListScreen';
+import { addSampleErrorLogs } from './src/utils/errorLogger';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,6 +74,13 @@ function DrawerContent(props) {
           label="Bildirim Ayarları"
           onPress={() => navigation.navigate('MainTabs', { screen: 'BildirimAyarlari' })}
         />
+        <DrawerItem
+          icon={({ color, size }) => (
+            <MaterialCommunityIcons name="alert" color={color} size={size} />
+          )}
+          label="Hata Listesi"
+          onPress={() => navigation.navigate('MainTabs', { screen: 'HataListesi' })}
+        />
       </DrawerContentScrollView>
       <DrawerItem
         icon={({ color, size }) => (
@@ -95,6 +104,10 @@ const styles = StyleSheet.create({
 
 function AppContent() {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    addSampleErrorLogs(); // Örnek hata verilerini ekle
+  }, []);
 
   if (!isAuthenticated) {
     return <LoginScreen />;
@@ -230,6 +243,14 @@ function TabNavigator() {
         component={LocationScreen}
         options={{ 
           title: 'Konum Takibi',
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen 
+        name="HataListesi" 
+        component={ErrorListScreen}
+        options={{ 
+          title: 'Hata Listesi',
           tabBarButton: () => null,
         }}
       />
