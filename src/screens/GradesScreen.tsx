@@ -8,14 +8,31 @@ const DUMMY_GRADES = {
   matematik: [
     { id: '1', type: 'Sınav', date: '2024-03-15', score: 85, maxScore: 100 },
     { id: '2', type: 'Ödev', date: '2024-03-10', score: 90, maxScore: 100 },
+    { id: '3', type: 'Proje', date: '2024-03-20', score: 78, maxScore: 100 },
+    { id: '4', type: 'Sınav', date: '2024-03-25', score: 92, maxScore: 100 },
+    { id: '5', type: 'Quiz', date: '2024-03-18', score: 88, maxScore: 100 }, // Yeni ders
   ],
   turkce: [
-    { id: '3', type: 'Sınav', date: '2024-03-12', score: 75, maxScore: 100 },
-    { id: '4', type: 'Proje', date: '2024-03-05', score: 95, maxScore: 100 },
+    { id: '6', type: 'Sınav', date: '2024-03-12', score: 75, maxScore: 100 },
+    { id: '7', type: 'Proje', date: '2024-03-05', score: 95, maxScore: 100 },
+    { id: '8', type: 'Ödev', date: '2024-03-18', score: 88, maxScore: 100 },
+    { id: '9', type: 'Sınav', date: '2024-03-22', score: 80, maxScore: 100 },
+    { id: '10', type: 'Sunum', date: '2024-03-20', score: 90, maxScore: 100 }, // Yeni ders
   ],
   fen: [
-    { id: '5', type: 'Sınav', date: '2024-03-08', score: 88, maxScore: 100 },
-    { id: '6', type: 'Laboratuvar', date: '2024-03-01', score: 92, maxScore: 100 },
+    { id: '11', type: 'Sınav', date: '2024-03-08', score: 88, maxScore: 100 },
+    { id: '12', type: 'Laboratuvar', date: '2024-03-01', score: 92, maxScore: 100 },
+    { id: '13', type: 'Proje', date: '2024-03-14', score: 85, maxScore: 100 },
+    { id: '14', type: 'Sınav', date: '2024-03-30', score: 90, maxScore: 100 },
+    { id: '15', type: 'Deney', date: '2024-03-28', score: 95, maxScore: 100 }, // Yeni ders
+  ],
+  hayatBilgisi: [
+    { id: '16', type: 'Sınav', date: '2024-03-15', score: 80, maxScore: 100 },
+    { id: '17', type: 'Proje', date: '2024-03-20', score: 85, maxScore: 100 },
+  ],
+  tarih: [
+    { id: '18', type: 'Sınav', date: '2024-03-12', score: 90, maxScore: 100 },
+    { id: '19', type: 'Ödev', date: '2024-03-18', score: 88, maxScore: 100 },
   ],
 };
 
