@@ -24,6 +24,10 @@ import NotificationSettingsScreen from './src/screens/NotificationSettingsScreen
 import NewsDetailScreen from './src/screens/NewsDetailScreen';
 import ErrorListScreen from './src/screens/ErrorListScreen';
 import { addSampleErrorLogs } from './src/utils/errorLogger';
+import AttendanceScreen from './src/screens/AttendanceScreen';
+import StudentScheduleScreen from './src/screens/StudentScheduleScreen';
+import StudentGradesScreen from './src/screens/StudentGradesScreen';
+import ExamsScreen from './src/screens/ExamsScreen';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,6 +35,7 @@ const Tab = createBottomTabNavigator();
 function DrawerContent(props) {
   const dispatch = useDispatch();
   const navigation = props.navigation;
+  const userType = useSelector((state: RootState) => state.auth.userType);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -46,27 +51,24 @@ function DrawerContent(props) {
           label="Ana Sayfa"
           onPress={() => navigation.navigate('MainTabs', { screen: 'AnaSayfa' })}
         />
-        <DrawerItem
-          icon={({ color, size }) => (
-            <MaterialCommunityIcons name="account-multiple" color={color} size={size} />
-          )}
-          label="Öğrenci Seçimi"
-          onPress={() => navigation.navigate('MainTabs', { screen: 'OgrenciListesi' })}
-        />
-        <DrawerItem
-          icon={({ color, size }) => (
-            <MaterialCommunityIcons name="calendar" color={color} size={size} />
-          )}
-          label="Ders Programı"
-          onPress={() => navigation.navigate('MainTabs', { screen: 'DersProgrami' })}
-        />
-        <DrawerItem
-          icon={({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker" color={color} size={size} />
-          )}
-          label="Konum Takibi"
-          onPress={() => navigation.navigate('MainTabs', { screen: 'KonumTakibi' })}
-        />
+        {userType === 'parent' && (
+          <>
+            <DrawerItem
+              icon={({ color, size }) => (
+                <MaterialCommunityIcons name="account-multiple" color={color} size={size} />
+              )}
+              label="Öğrenci Seçimi"
+              onPress={() => navigation.navigate('MainTabs', { screen: 'OgrenciListesi' })}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
+                <MaterialCommunityIcons name="map-marker" color={color} size={size} />
+              )}
+              label="Konum Takibi"
+              onPress={() => navigation.navigate('MainTabs', { screen: 'KonumTakibi' })}
+            />
+          </>
+        )}
         <DrawerItem
           icon={({ color, size }) => (
             <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
 
 function AppContent() {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const userType = useSelector((state: RootState) => state.auth.userType);
 
   useEffect(() => {
     addSampleErrorLogs(); // Örnek hata verilerini ekle
@@ -121,13 +124,18 @@ function AppContent() {
           headerShown: true,
         }}
       >
-        <Drawer.Screen 
-          name="MainTabs" 
-          component={TabNavigator}
-          options={{
-            headerTitle: 'Veli Takip Sistemi',
-          }}
-        />
+        {userType === 'student' ? (
+          <>
+            <Drawer.Screen name="Devamsızlık" component={AttendanceScreen} />
+            <Drawer.Screen name="Ders Programı" component={StudentScheduleScreen} />
+            <Drawer.Screen name="Notlar" component={StudentGradesScreen} />
+            <Drawer.Screen name="Sındavlar" component={ExamsScreen} />
+          </>
+        ) : (
+          <>
+            <Drawer.Screen name="Menu" component={TabNavigator} />
+          </>
+        )}
       </Drawer.Navigator>
     </NavigationContainer>
   );

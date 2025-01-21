@@ -20,6 +20,7 @@ interface AuthState {
   token: string | null;
   parent: Parent | null;
   selectedStudent: Student | null;
+  userType: 'parent' | 'student' | null;
 }
 
 const initialState: AuthState = {
@@ -27,23 +28,26 @@ const initialState: AuthState = {
   token: null,
   parent: null,
   selectedStudent: null,
+  userType: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ token: string; parent: Parent }>) => {
+    login: (state, action: PayloadAction<{ token: string; parent: Parent; userType: 'parent' | 'student' }>) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.parent = action.payload.parent;
       state.selectedStudent = action.payload.parent.students[0];
+      state.userType = action.payload.userType;
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
       state.parent = null;
       state.selectedStudent = null;
+      state.userType = null;
     },
     selectStudent: (state, action: PayloadAction<Student>) => {
       state.selectedStudent = action.payload;

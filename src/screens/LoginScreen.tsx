@@ -6,13 +6,13 @@ import { login } from '../store/slices/authSlice';
 import { logError } from '../utils/errorLogger';
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('veli@example.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
     try {
-      // Örnek veri ile giriş
+      const userType = email.includes('@example.com') ? 'parent' : 'student'; // Kullanıcı türünü belirle
       dispatch(login({
         token: 'dummy-token',
         parent: {
@@ -34,11 +34,22 @@ export default function LoginScreen() {
               photo: 'https://example.com/student2.jpg'
             }
           ]
-        }
+        },
+        userType: userType,
       }));
     } catch (error) {
       await logError(error);
     }
+  };
+
+  const fillParentCredentials = () => {
+    setEmail('veli@example.com');
+    setPassword('123456');
+  };
+
+  const fillStudentCredentials = () => {
+    setEmail('student@example.com'); // Örnek öğrenci e-posta
+    setPassword('student123'); // Örnek öğrenci şifresi
   };
 
   return (
@@ -63,6 +74,12 @@ export default function LoginScreen() {
       />
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         Giriş Yap
+      </Button>
+      <Button mode="outlined" onPress={fillParentCredentials} style={styles.button}>
+        Veli Olarak Giriş Yap
+      </Button>
+      <Button mode="outlined" onPress={fillStudentCredentials} style={styles.button}>
+        Öğrenci Olarak Giriş Yap
       </Button>
       <Text style={styles.hint}>
         Örnek giriş bilgileri:{'\n'}
